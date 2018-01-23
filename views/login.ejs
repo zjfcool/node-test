@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+  .container{
+      display:table;
+      height:100%;
+  }
+
+  .row{
+      display: table-cell;
+      vertical-align: middle;
+  }
+  /* centered columns styles */
+  .row-centered {
+      text-align:center;
+  }
+  .col-centered {
+      display:inline-block;
+      float:none;
+      text-align:left;
+      margin-right:-4px;
+  }
+  .input-group{
+    margin-top: 16px;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <div class="row row-centered">
+          <div class="well col-md-6 col-centered">
+              <h2>欢迎登录</h2>
+              <form role="form">
+                  <div class="input-group input-group-md">
+                      <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                      <input type="text" class="form-control" id="userid" name="userid" placeholder="请输入用户ID"/>
+                  </div>
+                  <div class="input-group input-group-md">
+                      <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                      <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码"/>
+                  </div>
+                  <div>
+                    <a class="pull-right" href="/reg">点击注册</a>
+                    <span class="pull-right">注册了吗？</span>
+                  </div>
+                  <div class="input-group">
+                    <button type="button" id="_loign" class="btn btn-success btn-block">登录</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+  <script src="plugins/jquery/dist/jquery.min.js"></script>
+  <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+    $(function(){
+      $('#_loign').on('click',function(){
+        var username = $('#userid').val();
+        var password = $('#password').val();
+        $.post('/login',{username,password}).then(res=>{
+            if(!res.code){
+              alert(`登陆失败：${res.msg}`)
+            }else{
+              location.pathname='/';
+            }
+        },err=>{
+
+        });
+      })
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+
+  </style>
+</head>
+<body>
+  <%- include('./header') %>
+  <% if(!username){ %>
+    <div class="container">
+      <h1>请登录...</h1>
+    </div>
+  <% } else{ %>
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+      <li>7</li>
+    </ul>
+  <% } %>
+  <script src="plugins/jquery/dist/jquery.min.js"></script>
+  <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+    $(function(){
+      $('#_logout').on('click',()=>{
+        $.get('/logout').then(res=>{
+          console.log(res)
+          if(res.code){
+            location.pathname='/'
+          }
+        },err=>{});
+      });
+      $('#_regbtn').click(()=>{
+        location.pathname='/reg';
+      })
+      $('#_loginbtn').click(()=>{
+        location.pathname='/login';
+      })
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+  .container{
+      display:table;
+      height:100%;
+  }
+
+  .row{
+      display: table-cell;
+      vertical-align: middle;
+  }
+  /* centered columns styles */
+  .row-centered {
+      text-align:center;
+  }
+  .col-centered {
+      display:inline-block;
+      float:none;
+      text-align:left;
+      margin-right:-4px;
+  }
+  .input-group{
+    margin-top: 16px;
+  }
+  .glyphicon-ok{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 9;
+    color: green;
+    display: none;
+  }
+  div.alert{
+    padding: 0;
+    margin: 0;
+    background: none;
+    display: none;
+  }
+  div.alert-danger{
+    border: none;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <div class="row row-centered">
+          <div class="well col-md-6 col-centered">
+              <h2>欢迎注册</h2>
+              <form role="form">
+                  <div class="input-group input-group-md">
+                      <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                      <input type="text" class="form-control" id="userid" name="userid" placeholder="请输入用户ID"/>
+                      <span class="glyphicon glyphicon-ok userid-ok"></span>
+                  </div>
+                  <div id="userDanger" class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="danger-text"></span>
+                  </div>
+                  <div class="input-group input-group-md">
+                      <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                      <input type="password" class="form-control" id="old_password" name="old_password" placeholder="请输入密码"/>
+                      <span class="glyphicon glyphicon-ok password-ok"></span>
+                  </div>
+                  <div id="passDanger" class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="danger-text"></span>
+                  </div>
+                  <div>
+                    <a class="pull-right" href="/login">点击登录</a>
+                    <span class="pull-right">已注册？</span>
+                  </div>
+                  <div class="input-group">
+                    <button type="button" id="_reg" class="btn btn-success btn-block">注册</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+  <script src="plugins/jquery/dist/jquery.min.js"></script>
+  <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+    $(function(){
+      // 可扩展验证对象
+      let validators = {
+        userid(val){
+          return  val===''?'不能为空':(val.length<6?"用户名长度应大于六位":true)
+        },
+        old_password(val){
+          return val===''?'不能为空':(val.length<8?"密码长度不少于8位数":true)
+        }
+      }
+      // 创建代理对象
+      function createValidator(target,validator){
+        return new Proxy(target,{
+          _validator:validator,
+          get(target,key){
+            if(target.hasOwnProperty(key)){
+              let vali = this._validator[key];
+              return vali(target[key])
+            }
+          }
+        })
+      };
+      // 存储验证内容
+      let users={
+        'userid':'',
+        'old_password':''
+      };
+      var proxy=null;
+      $('#userid').on('blur',()=>{
+        var val = $("#userid").val();
+        users.userid=val;
+        proxy = createValidator(users,validators)
+        var msg = proxy.userid;
+        if(msg===true){
+          $('span.userid-ok').fadeIn();
+          $('#userDanger').fadeOut();
+        }else{
+          $('#userDanger').fadeIn().find('.danger-text').text(msg);
+        }
+        isReg()
+      });
+      $('#old_password').on('blur',()=>{
+        var val = $("#old_password").val();
+        users.old_password=val;
+        proxy = createValidator(users,validators);
+        var msg = proxy.old_password;
+        if(msg===true){
+          $('span.password-ok').fadeIn();
+          $('#passDanger').fadeOut();
+        }else{
+          $('#passDanger').fadeIn().find('.danger-text').text(msg);
+        }
+        isReg()
+      });
+      // 判断是否能点击注册按钮
+      function isReg(){
+        if(proxy.userid===true&&proxy.old_password===true){
+          $('#_reg').removeClass('disabled');
+          $('#_reg').on('click',function(){
+            var username = $('#userid').val();
+            var password = $('#old_password').val();
+            $.post('/reg',{username,password}).then(res=>{
+                if(res.code){
+                  alert(res.msg);
+                  location.pathname='/login'
+                }else{
+                  alert(res.msg);
+                }
+            },err=>{
+                console.log(err)
+            });
+          })
+        }else{
+          $('#_reg').addClass('disabled');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
