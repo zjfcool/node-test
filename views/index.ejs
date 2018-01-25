@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title><%= title %></title>
   <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
   <style>
 
@@ -17,15 +17,108 @@
       <h1>请登录...</h1>
     </div>
   <% } else{ %>
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-    </ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="list-group">
+            <a href="javascript:void(0)" class="list-group-item active">
+              <span class="badge"><%= details.all.length %></span>
+              <span id="all" class="blog-type">all</span>
+            </a>
+            <a href="javascript:void(0)" class="list-group-item">
+              <span class="badge"><%= details.anything.length %></span>
+              <span id="anything" class="blog-type">anything</span>
+            </a>
+            <a href="javascript:void(0)" class="list-group-item">
+              <span class="badge"><%= details.it.length %></span>
+              <span id="it" class="blog-type">it</span>
+            </a>
+            <a href="javascript:void(0)" class="list-group-item">
+              <span class="badge"><%= details.xs.length %></span>
+              <span id="xs" class="blog-type">xs</span>
+            </a>
+            <a href="javascript:void(0)" class="list-group-item">
+              <span class="badge"><%= details.zl.length %></span>
+              <span id="zl" class="blog-type">zl</span>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-10 data-lists">
+          <div class="all">
+            <% for(let i=0;i<details.all.length;i++){ %>
+              <div class="panel">
+                <div class="panel-heading">
+                  <h3><%= details.all[i].title %> </h3>
+                </div>
+                <div class="panel-body">
+                  <p><%= details.all[i].description %></p>
+                  <p class="pull-left"><%= details.all[i].pushtime%> 发布</p>
+                  <p class="pull-right"><a href="/details?id=<%=details.all[i].ID%>">learn more-></a></p>
+                </div>
+              </div>
+            <%}%>
+          </div>
+          <div class="anything hidden">
+            <% for(let i=0;i<details.anything.length;i++){ %>
+              <div class="panel">
+                <div class="panel-heading">
+                  <h3><%= details.anything[i].title %> </h3>
+                </div>
+                <div class="panel-body">
+                  <p><%= details.anything[i].description %></p>
+                  <p class="pull-left"><%= details.anything[i].pushtime%> 发布</p>
+                  <p class="pull-right"><a href="/details?id=<%=details.anything[i].ID%>">learn more-></a></p>
+                </div>
+              </div>
+            <%}%>
+          </div>
+          <div class="it hidden">
+            <% for(let i=0;i<details.it.length;i++){ %>
+              <div class="panel">
+                <div class="panel-heading">
+                  <h3><%= details.it[i].title %> </h3>
+                </div>
+                <div class="panel-body">
+                  <p><%= details.it[i].description %></p>
+                  <p class="pull-left"><%= details.it[i].pushtime%> 发布</p>
+                  <p class="pull-right"><a href="/details?id=<%=details.it[i].ID%>">learn more-></a></p>
+                </div>
+              </div>
+            <%}%>
+          </div>
+          <div class="xs hidden">
+            <% for(let i=0;i<details.xs.length;i++){ %>
+              <div class="panel">
+                <div class="panel-heading">
+                  <h3><%= details.xs[i].title %> </h3>
+                </div>
+                <div class="panel-body">
+                  <p><%= details.xs[i].description %></p>
+                  <p class="pull-left"><%= details.xs[i].pushtime%> 发布</p>
+                  <p class="pull-right"><a href="/details?id=<%=details.xs[i].ID%>">learn more-></a></p>
+                </div>
+              </div>
+            <%}%>
+          </div>
+          <div class="zl hidden">
+            <% for(let i=0;i<details.zl.length;i++){ %>
+              <div class="panel">
+                <div class="panel-heading">
+                  <h3><%= details.zl[i].title %> </h3>
+                </div>
+                <div class="panel-body">
+                  <p><%= details.zl[i].description %></p>
+                  <p class="pull-left"><%= details.zl[i].pushtime%> 发布</p>
+                  <p class="pull-right"><a href="/details?id=<%=details.zl[i].ID%>">learn more-></a></p>
+                </div>
+              </div>
+            <%}%>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   <% } %>
   <script src="plugins/jquery/dist/jquery.min.js"></script>
   <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -33,17 +126,23 @@
     $(function(){
       $('#_logout').on('click',()=>{
         $.get('/logout').then(res=>{
-          console.log(res)
           if(res.code){
-            location.pathname='/'
+            location.href='http://172.30.16.177:3000/'
           }
         },err=>{});
       });
       $('#_regbtn').click(()=>{
-        location.pathname='/reg';
-      })
+        location.href='http://172.30.16.177:3000/reg';
+      });
       $('#_loginbtn').click(()=>{
-        location.pathname='/login';
+        location.href='http://172.30.16.177:3000/login';
+      });
+      $('.list-group-item').on('click',function(){
+        let index=$(this).index();
+        $(this).addClass('active').siblings().removeClass('active');
+
+        $('.data-lists>div').eq(index).removeClass('hidden').siblings().addClass('hidden')
+
       })
     });
   </script>

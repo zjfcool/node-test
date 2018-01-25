@@ -65,7 +65,7 @@
                   </div>
                   <div class="input-group input-group-md">
                       <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
-                      <input type="password" class="form-control" id="old_password" name="old_password" placeholder="请输入密码"/>
+                      <input type="password" autocomplete="new-password"  class="form-control" id="old_password" name="old_password" placeholder="请输入密码"/>
                       <span class="glyphicon glyphicon-ok password-ok"></span>
                   </div>
                   <div id="passDanger" class="alert alert-danger" role="alert">
@@ -150,7 +150,7 @@
             $.post('/reg',{username,password}).then(res=>{
                 if(res.code){
                   alert(res.msg);
-                  location.pathname='/login'
+                  location.href='http://172.30.16.177:3000/login'
                 }else{
                   alert(res.msg);
                 }

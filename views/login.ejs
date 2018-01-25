@@ -43,7 +43,7 @@
                   </div>
                   <div class="input-group input-group-md">
                       <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
-                      <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码"/>
+                      <input type="password" autocomplete="new-password"  class="form-control" id="password" name="password" placeholder="请输入密码"/>
                   </div>
                   <div>
                     <a class="pull-right" href="/reg">点击注册</a>
@@ -67,7 +67,7 @@
             if(!res.code){
               alert(`登陆失败：${res.msg}`)
             }else{
-              location.pathname='/';
+              location.href='http://172.30.16.177:3000/'
             }
         },err=>{
 

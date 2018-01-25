@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+
+  </style>
+</head>
+<body>
+  <%- include('./header') %>
+  <% if(!username){ %>
+    <div class="container">
+      <h1>请登录...</h1>
+    </div>
+  <% } else{ %>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">details</li>
+          </ol>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2><%= details.title %></h2>
+          <p>发布时间：<%= details.pushtime %></p>
+          <%- details.content.replace(/\s*$/g,'</p>').replace(/^\s*/g,'<p>') %>
+
+          <p class="pull-right">作者：<%= details.author%></p>
+        </div>
+      </div>
+    </div>
+
+  <% } %>
+  <script src="plugins/jquery/dist/jquery.min.js"></script>
+  <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+    $(function(){
+      $('#_logout').on('click',()=>{
+        $.get('/logout').then(res=>{
+          console.log(res)
+          if(res.code){
+            location.href='http://172.30.16.177:3000/'
+          }
+        },err=>{});
+      });
+      $('#_regbtn').click(()=>{
+        location.href='http://172.30.16.177:3000/reg';
+      })
+      $('#_loginbtn').click(()=>{
+        location.href='http://172.30.16.177:3000/login';
+      })
+    });
+  </script>
+</body>
+</html>

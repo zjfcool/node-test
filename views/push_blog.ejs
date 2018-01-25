@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+    div.input-group{
+      margin-top: 36px;
+    }
+    textarea.form-control{
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <%- include('./header') %>
+  <% if(!username){ %>
+    <div class="container">
+      <h1>请登录...</h1>
+    </div>
+  <% } else{ %>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">add blog</li>
+          </ol>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <form action="" role="form">
+            <div class="input-group">
+              <span class="input-group-addon">标题</span>
+              <input type="text" id="title" class="form-control" placeholder="标题">
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">描述</span>
+              <input type="text" id="description" class="form-control" placeholder="描述">
+            </div>
+            <div class="input-group">
+              <span class="input-group-addon">类型</span>
+              <select id="type" class="form-control">
+                <option>anything</option>
+                <option>it</option>
+                <option>xs</option>
+                <option>zl</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <textarea id="content" class="form-control" rows="24" cols='179' placeholder="正文"></textarea>
+            </div>
+            <div class="input-group">
+              <button type="button" id="add_blog" class="btn btn-primary">提交</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  <% } %>
+  <script src="plugins/jquery/dist/jquery.min.js"></script>
+  <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+    $(function(){
+      $('#_logout').on('click',()=>{
+        $.get('/logout').then(res=>{
+          console.log(res)
+          if(res.code){
+            location.href='http://172.30.16.177:3000/'
+          }
+        },err=>{});
+      });
+      $('#_regbtn').click(()=>{
+        location.href='http://172.30.16.177:3000/reg';
+      })
+      $('#_loginbtn').click(()=>{
+        location.href='http://172.30.16.177:3000/login';
+      });
+      $('#add_blog').on('click',()=>{
+        let postData={};
+        postData.pushtime=Math.floor((new Date().getTime())/1000);
+        postData.description=$('#description').val();
+        postData.title=$('#title').val();
+        postData.content=$('#content').val();
+        postData.type=$('#type').val();
+        $.post('/push_blog',postData).then(res=>{
+          if(res.code){
+            $('#description').val("");
+            $('#title').val("");
+            $('#content').val("");
+            alert(res.msg)
+          }
+        },err=>{
+          console.log(err);
+        })
+      })
+    });
+  </script>
+</body>
+</html>
