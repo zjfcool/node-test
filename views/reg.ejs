@@ -123,6 +123,7 @@
           $('span.userid-ok').fadeIn();
           $('#userDanger').fadeOut();
         }else{
+          $('span.userid-ok').fadeOut();
           $('#userDanger').fadeIn().find('.danger-text').text(msg);
         }
         isReg()
@@ -136,6 +137,7 @@
           $('span.password-ok').fadeIn();
           $('#passDanger').fadeOut();
         }else{
+          $('span.password-ok').fadeOut();
           $('#passDanger').fadeIn().find('.danger-text').text(msg);
         }
         isReg()
