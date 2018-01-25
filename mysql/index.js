@@ -44,6 +44,43 @@ var dbAction = {
         cb({code:1,msg:'登陆成功',data})
       }
     })
-  }
+  },
+  selectAllDetails:function(cb){
+    db.query(`SELECT * FROM details`,(err,data)=>{
+      if(err){
+        throw Error(err);
+      }else{
+        cb(data)
+      }
+    })
+  },
+  selectDetail:function(detailID,cb){
+    db.query(`SELECT * FROM details WHERE ID='${detailID}'`,(err,data)=>{
+      if(err){
+        throw Error(err);
+      }else{
+        cb(data)
+      }
+    })
+  },
+  insertBlog:function(obj,cb){
+    let {author,description,pushtime,content,title,type}=obj;
+    db.query(`INSERT INTO details (author,description,pushtime,content,title,type) VALUES('${author}','${description}','${pushtime}','${content}','${title}','${type}')`,(err,data)=>{
+      if(err){
+        throw Error(err);
+      }else{
+        cb({code:1,msg:'submit success'})
+      }
+    })
+  },
+  selectSomeDetails:function(typeid,cb){
+    db.query(`SELECT * FROM details WHERE type='${typeid}'`,(err,data)=>{
+      if(err){
+        throw Error(err);
+      }else{
+        cb(data);
+      }
+    })
+  },
 }
 module.exports=dbAction
