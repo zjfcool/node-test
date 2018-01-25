@@ -15,6 +15,7 @@
  ###### 通过cookie-session这个中间件，判断req.session['seesion_id']是否存在。
  ###### 通过res.redirect('地址')，从定向到指定位置。
 ## 2.用户注册成功后，跳转到登录页。
+![login](https://github.com/zjfcool/node-test/blob/master/public/images/login.png)
 ###### 注册时表单验证运用了Proxy,正好感受一下es6语法；
 ###### 点击提交后，就开始数据库增删改查语句的运用，这部分数据库操作就放到了mysql中通过传递一个回调函数来执行接下来的操作；
 ###### 函数结构为function(username,password,callback){...}；
