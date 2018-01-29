@@ -13,8 +13,13 @@ router.post('/',(req,res)=>{
   obj.content=req.body.content;
   obj.pushtime=req.body.pushtime;
   obj.type=req.body.type;
-  sqlUtil.insertBlog(obj, (odata)=>{
-    res.send(odata);
-  })
+  if(obj.title.length>16){
+    res.send({code:0,msg:'title 字数应少于16个'}).end();
+  }else{
+    sqlUtil.insertBlog(obj, (odata)=>{
+      res.send(odata).end();
+    })
+  }
+
 })
 module.exports=router;

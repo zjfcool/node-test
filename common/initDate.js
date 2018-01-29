@@ -1,6 +1,6 @@
 module.exports={
   date2:function(num){
-    return num>10?num:'0'+num;
+    return num>9?num:'0'+num;
   },
   initDate:function(timer){
     let date = new Date(timer*1000);
