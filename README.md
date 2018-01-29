@@ -31,3 +31,6 @@
 ###### 主页增加了blog列表，并将其分类展示出来了，这里主要就是sql语句的使用，查询语句 select * from details
 ###### 写一个blog，这里主要是文本性质的表单，暂时没有写文件上传，图片上传的东东，数据库就用到了一条插入语句，insert into details (...)  values(...)
 ![blog](https://github.com/zjfcool/node-test/blob/master/public/images/blog.png)
+## 6.用户管理blog列表
+###### 将登陆用户写的博客表格形式展现出来，有删除和编辑功能
+![blog](https://github.com/zjfcool/node-test/blob/master/public/images/guanli.png)
