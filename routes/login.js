@@ -3,7 +3,7 @@ const router = express.Router();
 const omd5 = require('../common/md5');
 const usersUtil = require('../mysql');
 router.get('/',(req,res,next)=>{
-  res.render('login',{});
+  return res.render('login',{});
   next();
 });
 router.post('/',async (req,res)=>{

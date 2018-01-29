@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+  <style>
+    table.table{
+      table-layout: fixed;
+    }
+    table td{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .model{
+      background: rgba(0,0,0,.35);
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <%- include('./header') %>
+  <% if(!username){ %>
+    <div class="container">
+      <h1>请登录...</h1>
+    </div>
+  <% } else{ %>
+    <div class="container">
+      <div class="row">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>作者</th>
+              <th>标题</th>
+              <th>描述</th>
+              <th>内容</th>
+              <th>类型</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0;i<details.length;i++){ %>
+              <tr>
+                <td class="author"><%= details[i]['author'] %></td>
+                <td class="title"><%= details[i]['title'] %></td>
+                <td class="description"><%= details[i]['description'] %></td>
+                <td class="content"><%= details[i]['content'] %></td>
+                <td class="type"><%= details[i]['type'] %></td>
+                <td>
+                  <button data-code='<%= details[i].ID %>' class="del btn btn-small">del</button>
+                  <button data-code='<%= details[i].ID %>' class="edit btn btn-small">edit</button>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="model hidden">
+
+    </div>
+    <%- include('./dialog.ejs') %>
+  <% } %>
+  <script src="plugins/jquery/dist/jquery.min.js"></script>
+  <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script>
+    $(function(){
+
+      $('#_logout').on('click',()=>{
+        $.get('/logout').then(res=>{
+          if(res.code){
+            location.href='http://172.30.16.177:3000/'
+          }
+        },err=>{});
+      });
+      $('#_regbtn').click(()=>{
+        location.href='http://172.30.16.177:3000/reg';
+      });
+      $('#_loginbtn').click(()=>{
+        location.href='http://172.30.16.177:3000/login';
+      });
+      $('.del').on('click',function(){
+        $(this).parent().parent().remove();
+        let id = $(this).attr('data-code');
+        let postDel={
+          id,
+          operation:'del'
+        };
+        $.post('/blog_table',postDel).then(res=>{
+          if(res.code){
+            alert(res.msg)
+          }
+        },err=>{
+            console.log(err)
+        })
+      })
+      let edit_id;
+      $('.edit').on('click',function(){
+        $('#edit_dialog')[0].show();
+        $('.model').removeClass('hidden');
+        $('#description').val($(this).parent().siblings('.description').text());
+        $('#title').val($(this).parent().siblings('.title').text());
+        $('#content').val($(this).parent().siblings('.content').text());
+        $('#type').val($(this).parent().siblings('.type').text());
+        edit_id=$(this).attr('data-code');
+      });
+      $('#update_blog').on('click',function(){
+        let edit_content={};
+        edit_content.id=edit_id;
+        edit_content.operation='edit';
+        edit_content.description=$('#description').val();
+        edit_content.title=$('#title').val();
+        edit_content.content=$('#content').val();
+        edit_content.type=$('#type').val();
+        $.post(`/blog_table`,edit_content).then(res=>{
+          if(res.code){
+            $('#edit_dialog')[0].close();
+            $('.model').addClass('hidden');
+            location.reload();
+            alert(res.msg);
+          }
+
+        },err=>{
+          console.log(err);
+        })
+      });
+      $('.model').on('click',function(){
+        $('#edit_dialog')[0].close();
+        $(this).addClass('hidden')
+      });
+
+    });
+  </script>
+</body>
+</html>

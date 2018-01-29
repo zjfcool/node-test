@@ -63,6 +63,15 @@ var dbAction = {
       }
     })
   },
+  delDetail:function(id,cb){
+    db.query(`DELETE FROM details WHERE ID='${id}'`,(err,results,fields)=>{
+      if(err){
+        throw Error(err);
+      }else{
+        cb({code:1,msg:'del success'});
+      }
+    })
+  },
   insertBlog:function(obj,cb){
     let {author,description,pushtime,content,title,type}=obj;
     db.query(`INSERT INTO details (author,description,pushtime,content,title,type) VALUES('${author}','${description}','${pushtime}','${content}','${title}','${type}')`,(err,data)=>{
@@ -82,5 +91,23 @@ var dbAction = {
       }
     })
   },
+  selectUserBlogs:function(author,cb){
+    db.query(`SELECT * FROM details WHERE author='${author}'`,(err,data)=>{
+      if(err){
+        throw Error(err);
+      }else{
+        cb(data)
+      }
+    })
+  },
+  editDetail:function(obj,cb){
+    db.query(`UPDATE details SET description='${obj.description}',title='${obj.title}',content='${obj.content}',type='${obj.type}' WHERE ID=${obj.id}`,(err,data)=>{
+      if(err){
+        throw Error(err);
+      }else{
+        cb({code:1,msg:'edit success'})
+      }
+    })
+  }
 }
 module.exports=dbAction

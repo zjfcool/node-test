@@ -1,0 +1,43 @@
+<style>
+  #edit_dialog{
+    border: 1px solid #ddd;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 50%;
+    z-index: 9;
+  }
+  div.input-group{
+    margin-top: 32px;
+  }
+</style>
+<dialog id="edit_dialog">
+  <form action="" role="form">
+    <div class="input-group">
+      <span class="input-group-addon">标题</span>
+      <input type="text" id="title" class="form-control" placeholder="标题" value="">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon">描述</span>
+      <input type="text" id="description" class="form-control" placeholder="描述">
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon">类型</span>
+      <select id="type" class="form-control">
+        <option>anything</option>
+        <option>it</option>
+        <option>xs</option>
+        <option>zl</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <textarea id="content" class="form-control" rows="24" cols='179' placeholder="正文"></textarea>
+    </div>
+    <div class="input-group">
+      <button type="button" id="update_blog" class="btn btn-primary">提交</button>
+    </div>
+  </form>
+</dialog>

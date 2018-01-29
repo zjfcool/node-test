@@ -3,7 +3,7 @@ const router = express.Router();
 const omd5 = require('../common/md5');
 const sqlUtils = require('../mysql');
 router.get('/',(req,res,next)=>{
-  res.render('reg',{});
+  return res.render('reg',{});
   next()
 });
 router.post('/',(req,res)=>{
