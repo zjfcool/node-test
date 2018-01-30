@@ -13,8 +13,23 @@ router.post('/',async (req,res)=>{
     if(obj.code){
       req.session['admin_id']=obj.data[0].ID;
       req.session['admin']=obj.data[0].username;
+      usersUtil.selectLogo(username,data1=>{
+        // 如果没有用户名
+        if(!!!data1[0]){
+          usersUtil.insertLogo({username:username,imgurl:'logo.png'},data=>{
+            usersUtil.selectLogo(username,data2=>{
+              req.session['logo']=data2[0].imgurl;
+              res.send({code:obj.code,msg:obj.msg}).end()
+            })
+          })
+          // 如果存在用户名
+        }else{
+          req.session['logo']=data1[0].imgurl;
+          res.send({code:obj.code,msg:obj.msg}).end()
+        }
+      })
       // res.redirect(200,'/');
-      res.send({code:obj.code,msg:obj.msg}).end();
+
     }else if(!obj.code){
       res.send({code:obj.code,msg:obj.msg}).end();
     }

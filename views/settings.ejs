@@ -7,9 +7,7 @@
   <title>Document</title>
   <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
   <style>
-    .detail_content{
-      text-indent: 24px;
-    }
+
   </style>
 </head>
 <body>
@@ -24,27 +22,26 @@
         <div class="col-sm-12">
           <ol class="breadcrumb">
             <li><a href="/">Home</a></li>
-            <li class="active">details</li>
+            <li class="active">settings</li>
           </ol>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <h2><%= details.title %></h2>
-          <p>发布时间：<%= details.pushtime %></p>
-          <%- details.content.replace(/^/gm,'<p class="detail_content">').replace(/$/gm,'</p>') %>
-          <p class="pull-right">作者：<%= details.author%></p>
+          <form id="form1" action="/settings" method="post" enctype="multipart/form-data">
+            <input type="file" name="profile">
+            <input type="submit" class="btn btn-primary" id="pro_setting" value="上传"/>
+          </form>
         </div>
       </div>
     </div>
-
   <% } %>
   <script src="plugins/jquery/dist/jquery.min.js"></script>
   <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="javascripts/header.js"></script>
   <script>
     $(function(){
-      
+
     });
   </script>
 </body>

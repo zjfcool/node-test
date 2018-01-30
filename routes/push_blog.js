@@ -3,7 +3,7 @@ const router = express.Router();
 const sqlUtil = require('../mysql');
 
 router.get('/', function(req, res) {
-  res.render('push_blog', { title: 'blog' ,username:req.session['admin']});
+  res.render('push_blog', { title: 'blog' ,username:req.session['admin'],logo:req.session['logo']});
 });
 router.post('/',(req,res)=>{
   let obj={};

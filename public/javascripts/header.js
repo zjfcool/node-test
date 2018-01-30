@@ -1,0 +1,16 @@
+$(function(){
+  $('#_logout').on('click',()=>{
+    $.get('/logout').then(res=>{
+      console.log(res)
+      if(res.code){
+        location.href='http://172.30.16.177:3000/'
+      }
+    },err=>{});
+  });
+  $('#_regbtn').click(()=>{
+    location.href='http://172.30.16.177:3000/reg';
+  })
+  $('#_loginbtn').click(()=>{
+    location.href='http://172.30.16.177:3000/login';
+  })
+})

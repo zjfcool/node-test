@@ -11,7 +11,13 @@ router.post('/',(req,res)=>{
   let password = omd5.md5(req.body.password+omd5.EXTKEY);
   sqlUtils.insertUser(username,password,(obj)=>{
     if(obj.code){
-      res.send({code:1,msg:'注册成功'});
+      // res.send({code:1,msg:'注册成功'}).end();
+      let imgobj={};
+      imgobj.username=username;
+      imgobj.imgurl='logo.png';
+      sqlUtils.insertLogo(imgobj, data=>{
+        res.send({code:1,msg:'注册成功'}).end();
+      })
       // req.redirect('/login');
     }else{
       res.send({code:0,msg:obj.msg});

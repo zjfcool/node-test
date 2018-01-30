@@ -108,6 +108,34 @@ var dbAction = {
         cb({code:1,msg:'edit success'})
       }
     })
+  },
+  insertLogo:function(obj,cb){
+    db.query(`INSERT INTO userslogo (username,imgurl) VALUES('${obj.username}','${obj.imgurl}')`,(err,data)=>{
+      if(err){
+        throw Error(err)
+      }else{
+        cb({code:1,msg:'img insert success'})
+      }
+    })
+  },
+  selectLogo:function(username,cb){
+    db.query(`SELECT imgurl FROM userslogo WHERE username='${username}'`,(err,data)=>{
+      if(err){
+        throw Error(err)
+      }else{
+        cb(data);
+      }
+    })
+  },
+  updateLogo:function(obj,cb){
+    db.query(`UPDATE userslogo SET imgurl='${obj.imgurl}' WHERE username='${obj.username}'`,(err,data)=>{
+      if(err) {
+        throw Error(err)
+      }else{
+        cb({code:1,msg:'update logo success'});
+      };
+
+    })
   }
 }
 module.exports=dbAction

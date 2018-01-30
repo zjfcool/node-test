@@ -36,7 +36,7 @@ router.get('/', function(req, res,next) {
           break;
       }
     }
-    return res.render('index', { title: 'Home' ,details:initdata,username:req.session['admin']});
+    return res.render('index', { title: 'Home' ,details:initdata,username:req.session['admin'],logo:req.session['logo']});
     next()
   })
   // if(req.session['admin_id']){

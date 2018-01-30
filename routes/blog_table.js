@@ -5,7 +5,7 @@ const sqlUtil = require('../mysql');
 router.get('/',(req,res,next)=>{
   if(req.session['admin']){
     sqlUtil.selectUserBlogs(req.session['admin'],data=>{
-      return res.render('blog_table',{username:req.session['admin'],title:'管理',details:data});
+      return res.render('blog_table',{username:req.session['admin'],title:'管理',details:data,logo:req.session['logo']});
     })
   }else{
     res.redirect('/login');
