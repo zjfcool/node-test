@@ -1,5 +1,5 @@
 # node-test
-本人菜鸟一枚，自学了node一段时间用express，mysql做个小练习，有哪里不对或者值得优化的地方，求指正。
+自学了node一段时间用express，mysql做个小练习。
 # 步骤
 ###### node 7+
 ###### 首先得安装了mysql数据库，mysql文件夹下有users.txt和details.txt数据表结构，导入到MySQL中
