@@ -35,5 +35,5 @@
 ###### 将登陆用户写的博客表格形式展现出来，有删除和编辑功能
 ![blog](https://github.com/zjfcool/node-test/blob/master/public/images/guanli.png)
 ## 7.用户头像
-###### 上传图片，更改用户头像。
+###### 上传图片，更改用户头像。添加了userslog表来存放用户名的头像图片名。
 ![blog](https://github.com/zjfcool/node-test/blob/master/public/images/upload.png)
